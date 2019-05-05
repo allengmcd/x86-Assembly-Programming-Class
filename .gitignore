@@ -1,4 +1,8 @@
 
 *.exe
+
 *.lnk
+
 *.obj
+
+.vscode\
