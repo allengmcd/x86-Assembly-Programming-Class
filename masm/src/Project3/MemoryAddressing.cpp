@@ -1,0 +1,26 @@
+// This code is from x86 Assembly Language From Ground Up from Udemy 
+// link: https://www.udemy.com/x86-assembly-programming-from-ground-uptm/
+
+// MemoryAddressing.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include "pch.h"
+#include <iostream>
+
+extern "C" int MemoryAddressing(int i, int* v1, int *v2, int *v3, int *v4);
+extern "C" int NumFibVals;
+
+int main()
+{
+	int v1=0,v2=0,v3=0,v4=0;
+	int rv;
+
+	for(int i=0; i <= NumFibVals; i++)
+	{
+		rv = MemoryAddressing(i, &v1, &v2, &v3, &v4);
+
+		printf("rv:   %5d   v1:   %5d   v2:   %5d   v3:   %5d   v4:   %5d \n", rv, v1, v2, v3, v4);
+	}
+
+	return 0;
+}
