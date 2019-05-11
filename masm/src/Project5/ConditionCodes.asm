@@ -5,37 +5,89 @@
 .386
 .model flat,c
 
-	extern GlChar:byte
-	extern GlShort:word
-	extern GlInt:dword
-	extern GlLongLong:qword
-
-
 .code
-IntegerAddition	proc
 
-		push ebp
-		mov ebp,esp
+SignedMinA	proc
+			push ebp
+			mov ebp, esp
+			mov eax,[ebp+8]
+			mov ecx,[ebp+12]
 
-	
-		mov al,[ebp+8]
-		add[GlChar],al
-
-
-		mov ax,[ebp+12]
-		add[GlShort],ax
+			cmp eax,ecx
+			jle @F				; Jump to nearest @@ if less than or equal to
+			mov eax, ecx
 
 
-		mov eax,[ebp+16]
-		add[GlInt],eax
+@@:		mov ecx,[ebp+16]
+		cmp eax,ecx
+		jle @F 
+		mov eax,ecx
 
 
-		mov eax,[ebp+20]
-		mov edx,[ebp+24]
-		add dword ptr[GlLongLong],eax
-		adc dword ptr[GlLongLong],edx
-		pop ebp
+
+@@:		pop ebp
 		ret
 
-IntegerAddition	endp
+SignedMinA	endp
+
+
+
+
+SignedMaxA	proc
+			push ebp
+			mov ebp, esp
+			mov eax,[ebp+8]
+			mov ecx,[ebp+12]
+
+			cmp eax,ecx
+			jge @F
+			mov eax, ecx
+
+
+@@:		mov ecx,[ebp+16]
+		cmp eax,ecx
+		jge @F
+		mov eax, ecx
+
+@@: pop ebp
+	ret
+SignedMaxA	endp
+
+
+SignedMinB	proc
+			push ebp
+			mov ebp,esp
+			mov eax,[ebp+8]
+			mov ecx,[ebp+12]
+
+			cmp eax,ecx
+			cmovg eax,ecx		; use cmovg for unsigned integers
+			mov ecx, [ebp+16]
+			cmp eax,ecx
+			cmovg eax,ecx
+
+			pop ebp
+			ret
+SignedMinB	endp
+
+
+SignedMaxB	proc
+			push ebp
+			mov ebp,esp
+			mov eax,[ebp+8]
+			mov ecx,[ebp+12]
+
+			cmp eax,ecx
+			cmovl eax,ecx		; use cmovl for unsigned integers
+			mov ecx, [ebp+16]
+			cmp eax,ecx
+			cmovl eax,ecx
+
+			pop ebp
+			ret
+SignedMaxB	endp
 		end
+
+
+
+
