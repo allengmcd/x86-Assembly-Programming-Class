@@ -2,7 +2,6 @@
 ; link: https://www.udemy.com/x86-assembly-programming-from-ground-uptm/
 ;
 
-.386
 .model flat,c
 
 .code
